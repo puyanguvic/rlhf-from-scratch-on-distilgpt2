@@ -152,3 +152,7 @@ def tokenize_example(tokenizer, text, max_length=64):
         padding=False,
     )
 
+# Step 13 - build_labels
+def build_labels(input_ids):
+    return input_ids.copy()
+
