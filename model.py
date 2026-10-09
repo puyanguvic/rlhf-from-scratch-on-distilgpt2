@@ -181,3 +181,18 @@ def make_attention_mask(padded_ids, pad_id):
         for sequence in padded_ids
     ]
 
+# Step 17 - collate_lm_batch
+def collate_lm_batch(batch, pad_id):
+    input_sequences = [example["input_ids"] for example in batch]
+    label_sequences = [example["labels"] for example in batch]
+
+    padded_ids = pad_batch(input_sequences, pad_id)
+    padded_labels = pad_batch(label_sequences, -100)
+    attention_mask = make_attention_mask(padded_ids, pad_id)
+
+    return {
+        "input_ids": torch.tensor(padded_ids, dtype=torch.long),
+        "labels": torch.tensor(padded_labels, dtype=torch.long),
+        "attention_mask": torch.tensor(attention_mask, dtype=torch.long),
+    }
+
