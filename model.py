@@ -247,3 +247,30 @@ def cross_entropy_loss(shift_logits, shift_labels):
         reduction="mean",
     )
 
+# Step 22 - adamw_update
+import torch
+
+def adamw_update(param, grad, state, lr, betas=(0.9, 0.999), eps=1e-8, weight_decay=0.0):
+    beta1, beta2 = betas
+
+    with torch.no_grad():
+        if "step" not in state:
+            state["step"] = 0
+            state["m"] = torch.zeros_like(param)
+            state["v"] = torch.zeros_like(param)
+
+        state["step"] += 1
+        step = state["step"]
+
+        state["m"].mul_(beta1).add_(grad, alpha=1 - beta1)
+        state["v"].mul_(beta2).addcmul_(grad, grad, value=1 - beta2)
+
+        m_hat = state["m"] / (1 - beta1 ** step)
+        v_hat = state["v"] / (1 - beta2 ** step)
+
+        param.mul_(1 - lr * weight_decay)
+
+        param.addcdiv_(m_hat, v_hat.sqrt() + eps, value=-lr)
+    
+    return param
+
