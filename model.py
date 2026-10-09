@@ -132,3 +132,10 @@ def build_synthetic_instruction_dataset():
         },
     ]
 
+# Step 10 - format_example
+def format_example(example):
+    return (
+        f"### Instruction:\n{example['prompt']}\n\n"
+        f"### Response:\n{example['response']}"
+    )
+
