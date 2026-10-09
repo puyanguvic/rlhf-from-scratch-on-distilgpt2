@@ -139,3 +139,7 @@ def format_example(example):
         f"### Response:\n{example['response']}"
     )
 
+# Step 11 - apply_template
+def apply_template(examples):
+    return [format_example(example) for example in examples]
+
