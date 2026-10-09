@@ -174,3 +174,10 @@ def pad_batch(sequences, pad_id):
         for seq in sequences
     ]
 
+# Step 16 - make_attention_mask
+def make_attention_mask(padded_ids, pad_id):
+    return [
+        [1 if token_id != pad_id else 0 for token_id in sequence]
+        for sequence in padded_ids
+    ]
+
