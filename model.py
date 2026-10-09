@@ -143,3 +143,12 @@ def format_example(example):
 def apply_template(examples):
     return [format_example(example) for example in examples]
 
+# Step 12 - tokenize_example
+def tokenize_example(tokenizer, text, max_length=64):
+    return tokenizer.encode(
+        text,
+        truncation=True,
+        max_length=max_length,
+        padding=False,
+    )
+
