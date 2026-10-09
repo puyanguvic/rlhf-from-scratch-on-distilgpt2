@@ -58,3 +58,17 @@ def sample_with_temperature(logits, temperature):
 
     return token_id.item()
 
+# Step 7 - top_k_filter
+def top_k_filter(logits, k):
+    if k < 1:
+        raise ValueError("k must be poe")
+    
+    k = min(k, logits.shape[-1])
+    
+    values, indices = torch.topk(logits, k, dim=-1)
+
+    filtered_logits = torch.full_like(logits, float("-inf"))
+    filtered_logits.scatter_(dim=-1, index=indices, src=values)
+
+    return filtered_logits
+
