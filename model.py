@@ -156,3 +156,12 @@ def tokenize_example(tokenizer, text, max_length=64):
 def build_labels(input_ids):
     return input_ids.copy()
 
+# Step 14 - mask_prompt_labels
+def mask_prompt_labels(labels, prompt_length):
+    masked_labels = labels.copy()
+
+    for i in range(min(prompt_length, len(masked_labels))):
+        masked_labels[i] = -100
+    
+    return masked_labels
+
