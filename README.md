@@ -11,6 +11,7 @@ python scaffold.py
 ## Steps
 
 - [x] **1.** load_distilgpt2_tokenizer
+- [x] **2.** load_distilgpt2_model
 
 ---
 
