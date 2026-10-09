@@ -165,3 +165,12 @@ def mask_prompt_labels(labels, prompt_length):
     
     return masked_labels
 
+# Step 15 - pad_batch
+def pad_batch(sequences, pad_id):
+    max_length = max((len(seq) for seq in sequences), default=0)
+
+    return [
+        seq + [pad_id] * (max_length - len(seq))
+        for seq in sequences
+    ]
+
