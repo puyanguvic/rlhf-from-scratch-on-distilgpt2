@@ -233,3 +233,17 @@ def shift_logits_and_labels(logits, labels):
 
     return shift_logits, shift_labels
 
+# Step 21 - cross_entropy_loss
+import torch
+import torch.nn.functional as F
+
+def cross_entropy_loss(shift_logits, shift_labels):
+    vocab_size = shift_logits.shape[-1]
+
+    return F.cross_entropy(
+        shift_logits.reshape(-1, vocab_size),
+        shift_labels.reshape(-1),
+        ignore_index=-100,
+        reduction="mean",
+    )
+
