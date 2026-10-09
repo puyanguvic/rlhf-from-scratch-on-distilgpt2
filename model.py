@@ -209,3 +209,20 @@ def iterate_minibatches(examples, batch_size, seed=0):
     for start in range(0, len(shuffled), batch_size):
         yield shuffled[start:start + batch_size]
 
+# Step 19 - train_val_split
+import random
+
+def train_val_split(examples, val_ratio=0.2, seed=0):
+    if not 0 <= val_ratio <= 1:
+        raise ValueError("val_ratio must be between 0 and 1")
+
+    shuffled = list(examples)
+    random.Random(seed).shuffle(shuffled)
+
+    val_size = int(len(shuffled) * val_ratio)
+
+    val = shuffled[:val_size]
+    train = shuffled[val_size:]
+
+    return train, val
+
