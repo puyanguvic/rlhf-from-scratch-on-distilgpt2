@@ -25,3 +25,18 @@ def set_pad_token_to_eos(tokenizer):
     tokenizer.pad_token = tokenizer.eos_token
     return tokenizer
 
+# Step 4 - generate_and_decode
+def generate_and_decode(model, tokenizer, prompt, max_new_tokens=8):
+    inputs = tokenizer(prompt, return_tensors="pt").to(model.device)
+
+    with torch.no_grad():
+        outputs = model.generate(
+            **inputs,
+            max_new_tokens=max_new_tokens,
+            do_sample=False,
+            num_beams=1,
+            pad_token_id=tokenizer.eos_token_id,
+        )
+    
+    return tokenizer.decode(outputs[0], skip_special_tokens=True)
+
