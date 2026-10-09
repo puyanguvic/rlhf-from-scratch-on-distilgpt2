@@ -196,3 +196,16 @@ def collate_lm_batch(batch, pad_id):
         "attention_mask": torch.tensor(attention_mask, dtype=torch.long),
     }
 
+# Step 18 - iterate_minibatches
+import random
+
+def iterate_minibatches(examples, batch_size, seed=0):
+    if batch_size <= 0:
+        raise ValueError("batch_size must be positive")
+
+    shuffled = list(examples)
+    random.Random(seed).shuffle(shuffled)
+
+    for start in range(0, len(shuffled), batch_size):
+        yield shuffled[start:start + batch_size]
+
