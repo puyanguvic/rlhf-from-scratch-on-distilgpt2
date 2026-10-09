@@ -107,3 +107,28 @@ def top_p_filter(logits, p):
 
     return filtered_logits
 
+# Step 9 - build_synthetic_instruction_dataset
+def build_synthetic_instruction_dataset():
+    return [
+        {
+            "prompt": "What is the capital of France?",
+            "response": "The capital of France is Paris.",
+        },
+        {
+            "prompt": "Calculate 2 + 3.",
+            "response": "2 + 3 = 5.",
+        },
+        {
+            "prompt": "Translate 'hello' into French.",
+            "response": "Bonjour.",
+        },
+        {
+            "prompt": "Explain what a tokenizer does.",
+            "response": "A tokenizer converts text into tokens and their numerical IDs.",
+        },
+        {
+            "prompt": "Write a Python function that adds two numbers.",
+            "response": "def add(a, b):\n    return a + b",
+        },
+    ]
+
