@@ -334,3 +334,35 @@ def sft_train_step(model, batch, optimizer):
 
     return loss.item()
 
+# Step 27 - evaluate_loss
+import torch
+
+def evaluate_loss(model, batches):
+    was_training = model.training
+    model.eval()
+
+    total_loss = 0.0
+    num_batches = 0
+
+    try:
+        with torch.no_grad():
+            outputs = model(
+                input_ids=batch["input_ids"],
+                attention_mask=batch["attention_mask"],
+            )
+
+            shift_logits, shift_labels = shift_logits_and_labels(
+                outputs.logits,
+                batch["labels"],
+            )
+
+            loss = cross_entropy_loss(shift_logits, shift_labels)
+
+            total_loss += loss.item()
+            num_batches += 1
+    
+    finally:
+        model.train(was_training)
+    
+    return total_loss / num_batches if num_batches else 0.0
+
