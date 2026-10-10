@@ -304,3 +304,9 @@ def clip_grad_norm(grads, max_norm):
     
     return total_norm
 
+# Step 25 - accumulate_gradients
+import torch
+
+def accumulate_gradients(grad_list):
+    return torch.stack(grad_list, dim=0).mean(dim=0)
+
