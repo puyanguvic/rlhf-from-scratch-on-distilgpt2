@@ -366,3 +366,7 @@ def evaluate_loss(model, batches):
     
     return total_loss / num_batches if num_batches else 0.0
 
+# Step 28 - lora_delta
+def lora_delta(A, B, alpha, r):
+    return (B @ A) * (alpha / r)
+
