@@ -411,3 +411,7 @@ def count_trainable_params(model):
         if p.requires_grad
     )
 
+# Step 33 - merge_lora
+def merge_lora(base_weight, lora_a, lora_b, scaling):
+    return base_weight + scaling * (lora_b @ lora_a)
+
