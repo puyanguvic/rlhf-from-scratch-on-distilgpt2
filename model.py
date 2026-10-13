@@ -382,3 +382,14 @@ def lora_linear_forward(x, base_weight, A, B, alpha, r, bias=None):
     
     return output
 
+# Step 30 - init_lora_weights
+import torch
+
+def init_lora_weights(in_features, out_features, r, seed=0):
+    torch.manual_seed(seed)
+
+    A = torch.randn(r, in_features, dtype=torch.float32) * 0.01
+    B = torch.zeros(out_features, r, dtype=torch.float32)
+
+    return A, B
+

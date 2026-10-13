@@ -39,6 +39,7 @@ python scaffold.py
 - [x] **27.** evaluate_loss
 - [x] **28.** lora_delta
 - [x] **29.** lora_linear_forward
+- [x] **30.** init_lora_weights
 
 ---
 
