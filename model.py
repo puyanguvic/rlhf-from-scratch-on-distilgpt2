@@ -370,3 +370,15 @@ def evaluate_loss(model, batches):
 def lora_delta(A, B, alpha, r):
     return (B @ A) * (alpha / r)
 
+# Step 29 - lora_linear_forward
+def lora_linear_forward(x, base_weight, A, B, alpha, r, bias=None):
+    delta_weight = lora_delta(A, B, alpha, r)
+    weight = base_weight + delta_weight
+
+    output = x @ weight.T
+
+    if bias is not None:
+        output = output + bias
+    
+    return output
+
