@@ -415,3 +415,23 @@ def count_trainable_params(model):
 def merge_lora(base_weight, lora_a, lora_b, scaling):
     return base_weight + scaling * (lora_b @ lora_a)
 
+# Step 34 - build_synthetic_preference_dataset
+def build_synthetic_preference_dataset(num_examples=8, seed=0):
+    templates = [
+        {
+            "prompt": "What is the capital of France?",
+            "chosen": "The capital of France is Paris.",
+            "rejected": "I do not know.",
+        },
+        {
+            "prompt": "What is 2 + 2?",
+            "chosen": "2 + 2 equals 4.",
+            "rejected": "2 + 2 equals 5.",
+        },
+    ]
+
+    return [
+        templates[(i + seed) % len(templates)].copy()
+        for i in range(num_examples)
+    ]
+
