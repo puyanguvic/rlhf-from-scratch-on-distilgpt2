@@ -403,3 +403,11 @@ def freeze_base_params(model):
     
     return model
 
+# Step 32 - count_trainable_params
+def count_trainable_params(model):
+    return sum(
+        p.numel()
+        for p in model.parameters()
+        if p.requires_grad
+    )
+
