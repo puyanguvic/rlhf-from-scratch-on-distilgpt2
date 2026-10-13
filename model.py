@@ -393,3 +393,13 @@ def init_lora_weights(in_features, out_features, r, seed=0):
 
     return A, B
 
+# Step 31 - freeze_base_params
+def freeze_base_params(model):
+    for name, param in model.named_parameters():
+        if "lora" in name.lower():
+            param.requires_grad = True
+        else:
+            param.requires_grad = False
+    
+    return model
+
