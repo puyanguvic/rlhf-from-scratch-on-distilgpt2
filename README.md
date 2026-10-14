@@ -50,6 +50,7 @@ python scaffold.py
 - [x] **38.** reward_bce_loss
 - [x] **39.** pairwise_accuracy
 - [x] **40.** reward_train_step
+- [x] **41.** sequence_logprob
 
 ---
 

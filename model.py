@@ -536,3 +536,16 @@ def reward_train_step(model, reward_head, batch, optimizer):
         "accuracy": accuracy.item(),
     }
 
+# Step 41 - sequence_logprob
+import torch
+import torch.nn.functional as F
+
+def sequence_logprob(logits, token_ids):
+    log_probs = F.log_softmax(logits, dim=-1)
+    selected = log_probs.gather(
+        dim=-1,
+        index=token_ids.unsqueeze(-1),
+    )
+
+    return selected.sum()
+
