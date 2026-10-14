@@ -658,3 +658,22 @@ import torch
 def kl_penalized_reward(reward, kl, beta=0.1):
     return reward - beta * kl
 
+# Step 51 - batch_sequence_logprob
+import torch
+import torch.nn.functional as F
+
+def batch_sequence_logprob(logits, token_ids, attention_mask=None):
+    log_probs = F.log_softmax(logits, dim=-1)  # (B, T, V)
+
+    selected_log_probs = log_probs.gather(
+        dim=-1,
+        index=token_ids.unsqueeze(-1),
+    ).squeeze(-1)  # (B, T)
+
+    if attention_mask is not None:
+        selected_log_probs = selected_log_probs.masked_fill(
+            attention_mask == 0, 0.0
+        )
+
+    return selected_log_probs.sum(dim=-1)  # (B,)
+
