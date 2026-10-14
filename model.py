@@ -476,3 +476,64 @@ import torch
 def pairwise_accuracy(chosen_reward, rejected_reward):
     return (chosen_reward > rejected_reward).float().mean().item()
 
+# Step 40 - reward_train_step
+import torch
+import torch.nn.functional as F
+
+def reward_train_step(model, reward_head, batch, optimizer):
+    model.train()
+    reward_head.train()
+    optimizer.zero_grad()
+
+    def score(prefix):
+        input_ids = batch[f"{prefix}_input_ids"]
+        attention_mask = batch.get(f"{prefix}_attention_mask")
+
+        if attention_mask is None:
+            outputs = model(input_ids=input_ids)
+        else:
+            outputs = model(
+                input_ids=input_ids,
+                attention_mask=attention_mask,
+            )
+
+        if isinstance(outputs, torch.Tensor):
+            hidden = outputs
+        else:
+            hidden = outputs.last_hidden_state
+
+        if attention_mask is None:
+            last_hidden = hidden[:, -1, :]
+        else:
+            positions = torch.arange(
+                hidden.size(1), device=hidden.device
+            ).unsqueeze(0).expand(hidden.size(0), -1)
+
+            last_indices = positions.masked_fill(
+                attention_mask == 0, -1
+            ).max(dim=1).values
+
+            rows = torch.arange(hidden.size(0), device=hidden.device)
+            last_hidden = hidden[rows, last_indices]
+
+        # 直接使用奖励头参数计算，不调用 forward()
+        rewards = (
+            last_hidden @ reward_head.weight.reshape(-1)
+            + reward_head.bias
+        )
+        return rewards.reshape(hidden.size(0))
+
+    chosen_reward = score("chosen")
+    rejected_reward = score("rejected")
+
+    loss = -F.logsigmoid(chosen_reward - rejected_reward).mean()
+    accuracy = (chosen_reward > rejected_reward).float().mean()
+
+    loss.backward()
+    optimizer.step()
+
+    return {
+        "loss": loss.item(),
+        "accuracy": accuracy.item(),
+    }
+
