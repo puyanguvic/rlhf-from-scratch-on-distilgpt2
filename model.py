@@ -516,7 +516,6 @@ def reward_train_step(model, reward_head, batch, optimizer):
             rows = torch.arange(hidden.size(0), device=hidden.device)
             last_hidden = hidden[rows, last_indices]
 
-        # 直接使用奖励头参数计算，不调用 forward()
         rewards = (
             last_hidden @ reward_head.weight.reshape(-1)
             + reward_head.bias
