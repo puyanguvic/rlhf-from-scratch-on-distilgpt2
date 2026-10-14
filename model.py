@@ -470,3 +470,9 @@ def reward_bce_loss(chosen_reward, rejected_reward):
         rejected_loss.reshape(-1),
     ]).mean()
 
+# Step 39 - pairwise_accuracy
+import torch
+
+def pairwise_accuracy(chosen_reward, rejected_reward):
+    return (chosen_reward > rejected_reward).float().mean().item()
+
