@@ -442,3 +442,9 @@ def format_preference(example):
         "rejected_text": example["prompt"] + " " + example["rejected"],
     }
 
+# Step 36 - reward_head_forward
+import torch
+
+def reward_head_forward(hidden_state, weight, bias):
+    return hidden_state @ weight.reshape(-1) + bias
+
