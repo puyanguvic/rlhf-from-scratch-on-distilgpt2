@@ -592,3 +592,15 @@ import torch
 def policy_ratio(new_logprobs, old_logprobs):
     return torch.exp(new_logprobs - old_logprobs)
 
+# Step 46 - clipped_surrogate
+import torch
+
+def clipped_surrogate(ratio, advantages, clip_eps=0.2):
+    objective = ratio * advantages
+    clipped_objective = (
+        torch.clamp(ratio, 1 - clip_eps, 1 + clip_eps)
+        * advantages
+    )
+
+    return -torch.minimum(objective, clipped_objective).mean()
+

@@ -55,6 +55,7 @@ python scaffold.py
 - [x] **43.** compute_returns
 - [x] **44.** gae_advantages
 - [x] **45.** policy_ratio
+- [x] **46.** clipped_surrogate
 
 ---
 
