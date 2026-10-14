@@ -555,3 +555,17 @@ import numpy as np
 def per_token_kl(policy_logprobs, ref_logprobs):
     return np.asarray(policy_logprobs) - np.asarray(ref_logprobs)
 
+# Step 43 - compute_returns
+import numpy as np
+
+def compute_returns(rewards, gamma=0.99):
+    rewards = np.asarray(rewards, dtype=float)
+    returns = np.zeros_like(rewards)
+
+    running_return = 0.0
+    for t in range(len(rewards) - 1, -1, -1):
+        running_return = rewards[t] + gamma * running_return
+        returns[t] = running_return
+
+    return returns
+

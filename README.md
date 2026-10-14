@@ -52,6 +52,7 @@ python scaffold.py
 - [x] **40.** reward_train_step
 - [x] **41.** sequence_logprob
 - [x] **42.** per_token_kl
+- [x] **43.** compute_returns
 
 ---
 
