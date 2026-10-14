@@ -58,6 +58,7 @@ python scaffold.py
 - [x] **46.** clipped_surrogate
 - [x] **47.** value_function_loss
 - [x] **48.** entropy_bonus
+- [x] **49.** ppo_loss
 
 ---
 

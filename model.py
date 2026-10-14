@@ -620,3 +620,35 @@ def entropy_bonus(logits):
     entropy = -(probs * log_probs).sum(dim=-1)
     return entropy.mean()
 
+# Step 49 - ppo_loss
+import torch
+import torch.nn.functional as F
+
+def ppo_loss(
+    ratio, advantages, values, returns, logits,
+    clip_eps=0.2, vf_coef=0.5, ent_coef=0.01,
+):
+    objective = ratio * advantages
+    clipped_objective = (
+        torch.clamp(ratio, 1 - clip_eps, 1 + clip_eps)
+        * advantages
+    )
+    policy_loss = -torch.minimum(
+        objective, clipped_objective
+    ).mean()
+
+    value_loss = ((values - returns) ** 2).mean()
+
+    log_probs = F.log_softmax(logits, dim=-1)
+    probs = log_probs.exp()
+    entropy = -(probs * log_probs).sum(dim=-1).mean()
+
+    loss = policy_loss + vf_coef * value_loss - ent_coef * entropy
+
+    return {
+        "loss": loss,
+        "policy_loss": policy_loss,
+        "value_loss": value_loss,
+        "entropy": entropy,
+    }
+
