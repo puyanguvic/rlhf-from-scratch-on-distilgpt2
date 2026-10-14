@@ -549,3 +549,9 @@ def sequence_logprob(logits, token_ids):
 
     return selected.sum()
 
+# Step 42 - per_token_kl
+import numpy as np
+
+def per_token_kl(policy_logprobs, ref_logprobs):
+    return np.asarray(policy_logprobs) - np.asarray(ref_logprobs)
+
