@@ -652,3 +652,9 @@ def ppo_loss(
         "entropy": entropy,
     }
 
+# Step 50 - kl_penalized_reward
+import torch
+
+def kl_penalized_reward(reward, kl, beta=0.1):
+    return reward - beta * kl
+

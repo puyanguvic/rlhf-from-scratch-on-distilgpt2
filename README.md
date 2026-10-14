@@ -59,6 +59,7 @@ python scaffold.py
 - [x] **47.** value_function_loss
 - [x] **48.** entropy_bonus
 - [x] **49.** ppo_loss
+- [x] **50.** kl_penalized_reward
 
 ---
 
