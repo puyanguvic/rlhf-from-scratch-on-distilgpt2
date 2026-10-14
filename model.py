@@ -455,3 +455,18 @@ import torch.nn.functional as F
 def pairwise_reward_loss(chosen_reward, rejected_reward):
     return -F.logsigmoid(chosen_reward - rejected_reward).mean()
 
+# Step 38 - reward_bce_loss
+import numpy as np
+
+def reward_bce_loss(chosen_reward, rejected_reward):
+    chosen_reward = np.asarray(chosen_reward)
+    rejected_reward = np.asarray(rejected_reward)
+
+    chosen_loss = np.logaddexp(0, -chosen_reward)
+    rejected_loss = np.logaddexp(0, rejected_reward)
+
+    return np.concatenate([
+        chosen_loss.reshape(-1),
+        rejected_loss.reshape(-1),
+    ]).mean()
+
