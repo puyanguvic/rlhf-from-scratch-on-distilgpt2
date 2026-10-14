@@ -448,3 +448,10 @@ import torch
 def reward_head_forward(hidden_state, weight, bias):
     return hidden_state @ weight.reshape(-1) + bias
 
+# Step 37 - pairwise_reward_loss
+import torch
+import torch.nn.functional as F
+
+def pairwise_reward_loss(chosen_reward, rejected_reward):
+    return -F.logsigmoid(chosen_reward - rejected_reward).mean()
+
