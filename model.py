@@ -610,3 +610,13 @@ import torch
 def value_function_loss(values, returns):
     return ((values - returns) ** 2).mean()
 
+# Step 48 - entropy_bonus
+import torch
+import torch.nn.functional as F
+
+def entropy_bonus(logits):
+    log_probs = F.log_softmax(logits, dim=-1)
+    probs = log_probs.exp()
+    entropy = -(probs * log_probs).sum(dim=-1)
+    return entropy.mean()
+
