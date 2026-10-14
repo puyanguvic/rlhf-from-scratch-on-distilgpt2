@@ -569,3 +569,20 @@ def compute_returns(rewards, gamma=0.99):
 
     return returns
 
+# Step 44 - gae_advantages
+import numpy as np
+
+def gae_advantages(rewards, values, gamma=0.99, lam=0.95):
+    rewards = np.asarray(rewards, dtype=float)
+    values = np.asarray(values, dtype=float)
+    advantages = np.zeros_like(rewards)
+
+    running_advantage = 0.0
+
+    for t in range(len(rewards) - 1, -1, -1):
+        delta = rewards[t] + gamma * values[t + 1] - values[t]
+        running_advantage = delta + gamma * lam * running_advantage
+        advantages[t] = running_advantage
+
+    return advantages
+
