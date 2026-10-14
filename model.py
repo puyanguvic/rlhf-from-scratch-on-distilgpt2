@@ -604,3 +604,9 @@ def clipped_surrogate(ratio, advantages, clip_eps=0.2):
 
     return -torch.minimum(objective, clipped_objective).mean()
 
+# Step 47 - value_function_loss
+import torch
+
+def value_function_loss(values, returns):
+    return ((values - returns) ** 2).mean()
+
